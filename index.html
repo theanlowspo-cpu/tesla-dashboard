@@ -7,491 +7,85 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        /* 背景圖層 */
-        .bg-layer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        
-        .bg-layer img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.3;
-        }
-        
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(20,0,0,0.8) 50%, rgba(0,0,0,0.9) 100%);
-            z-index: -1;
-        }
-        
-        /* 頂部導航 */
-        .header {
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(232,33,39,0.3);
-            backdrop-filter: blur(10px);
-            background: rgba(0,0,0,0.5);
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .logo img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 2px solid #e82127;
-            box-shadow: 0 0 20px rgba(232,33,39,0.5);
-        }
-        
-        .logo-text {
-            font-family: 'Orbitron', sans-serif;
-        }
-        
-        .logo-text h1 {
-            font-size: 1.8rem;
-            background: linear-gradient(90deg, #e82127, #ff6b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(232,33,39,0.5);
-        }
-        
-        .logo-text span {
-            font-size: 0.8rem;
-            color: #888;
-            letter-spacing: 3px;
-        }
-        
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 20px;
-            background: rgba(0,255,0,0.1);
-            border: 1px solid rgba(0,255,0,0.3);
-            border-radius: 30px;
-        }
-        
-        .status-dot {
-            width: 12px;
-            height: 12px;
-            background: #00ff00;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 5px #00ff00; }
-            50% { box-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00; }
-        }
-        
-        /* 主要內容區 */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 30px;
-            padding: 40px;
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-        
-        /* 左側 - 主要數據 */
-        .main-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-        
-        /* 股票卡片 */
-        .stock-card {
-            background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(10,10,10,0.95));
-            border: 1px solid rgba(232,33,39,0.3);
-            border-radius: 20px;
-            padding: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stock-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #e82127, transparent);
-        }
-        
-        .stock-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 30px;
-        }
-        
-        .stock-info h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            color: #e82127;
-            text-shadow: 0 0 30px rgba(232,33,39,0.5);
-        }
-        
-        .stock-info p {
-            color: #888;
-            font-size: 1.1rem;
-        }
-        
-        .stock-price {
-            text-align: right;
-        }
-        
-        .price-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 900;
-            background: linear-gradient(90deg, #00ff88, #00ffcc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .price-change {
-            font-size: 1.5rem;
-            padding: 5px 15px;
-            border-radius: 10px;
-            display: inline-block;
-            margin-top: 10px;
-        }
-        
-        .price-change.up {
-            background: rgba(0,255,0,0.2);
-            color: #00ff00;
-        }
-        
-        .price-change.down {
-            background: rgba(255,0,0,0.2);
-            color: #ff4444;
-        }
-        
-        /* 策略狀態 */
-        .strategy-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        
-        .strategy-item {
-            background: rgba(30,30,30,0.8);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        
-        .strategy-item:hover {
-            border-color: #e82127;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(232,33,39,0.2);
-        }
-        
-        .strategy-item .icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-        
-        .strategy-item .label {
-            color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-        
-        .strategy-item .value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            color: #fff;
-        }
-        
-        /* 交易歷史 */
-        .trades-section {
-            background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(10,10,10,0.95));
-            border: 1px solid rgba(232,33,39,0.3);
-            border-radius: 20px;
-            padding: 30px;
-        }
-        
-        .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            color: #e82127;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .trades-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .trade-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: rgba(40,40,40,0.5);
-            border-radius: 10px;
-            margin-bottom: 10px;
-            border-left: 3px solid;
-        }
-        
+        body { font-family: 'Noto Sans TC', sans-serif; background: #0a0a0a; color: #fff; min-height: 100vh; overflow-x: hidden; }
+        .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .bg-layer img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
+        .bg-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(20,0,0,0.8) 50%, rgba(0,0,0,0.9) 100%); z-index: -1; }
+        .header { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(232,33,39,0.3); backdrop-filter: blur(10px); background: rgba(0,0,0,0.5); }
+        .logo { display: flex; align-items: center; gap: 15px; }
+        .logo img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #e82127; box-shadow: 0 0 20px rgba(232,33,39,0.5); }
+        .logo-text { font-family: 'Orbitron', sans-serif; }
+        .logo-text h1 { font-size: 1.8rem; background: linear-gradient(90deg, #e82127, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-text span { font-size: 0.8rem; color: #888; letter-spacing: 3px; }
+        .header-right { display: flex; align-items: center; gap: 15px; }
+        .status-badge { display: flex; align-items: center; gap: 10px; padding: 10px 20px; background: rgba(0,255,0,0.1); border: 1px solid rgba(0,255,0,0.3); border-radius: 30px; }
+        .status-dot { width: 12px; height: 12px; background: #00ff00; border-radius: 50%; animation: pulse 2s infinite; }
+        .refresh-btn { background: rgba(232,33,39,0.2); border: 1px solid #e82127; color: #e82127; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; transition: all 0.3s ease; }
+        .refresh-btn:hover { background: #e82127; color: #fff; }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 5px #00ff00; } 50% { box-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00; } }
+        .main-content { display: grid; grid-template-columns: 1fr 400px; gap: 30px; padding: 40px; max-width: 1600px; margin: 0 auto; }
+        .main-panel { display: flex; flex-direction: column; gap: 30px; }
+        .stock-card { background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(10,10,10,0.95)); border: 1px solid rgba(232,33,39,0.3); border-radius: 20px; padding: 30px; position: relative; overflow: hidden; }
+        .stock-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, #e82127, transparent); }
+        .stock-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+        .stock-info h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; color: #e82127; text-shadow: 0 0 30px rgba(232,33,39,0.5); }
+        .stock-info p { color: #888; font-size: 1.1rem; }
+        .stock-price { text-align: right; }
+        .price-value { font-family: 'Orbitron', sans-serif; font-size: 3.5rem; font-weight: 900; background: linear-gradient(90deg, #00ff88, #00ffcc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .price-change { font-size: 1.5rem; padding: 5px 15px; border-radius: 10px; display: inline-block; margin-top: 10px; }
+        .price-change.up { background: rgba(0,255,0,0.2); color: #00ff00; }
+        .price-change.down { background: rgba(255,0,0,0.2); color: #ff4444; }
+        .strategy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .strategy-item { background: rgba(30,30,30,0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 25px; text-align: center; transition: all 0.3s ease; }
+        .strategy-item:hover { border-color: #e82127; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(232,33,39,0.2); }
+        .strategy-item .icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .strategy-item .label { color: #888; font-size: 0.9rem; margin-bottom: 10px; }
+        .strategy-item .value { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: #fff; }
+        .trades-section { background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(10,10,10,0.95)); border: 1px solid rgba(232,33,39,0.3); border-radius: 20px; padding: 30px; }
+        .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #e82127; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .trades-list { max-height: 300px; overflow-y: auto; }
+        .trade-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(40,40,40,0.5); border-radius: 10px; margin-bottom: 10px; border-left: 3px solid; }
         .trade-item.buy { border-left-color: #00ff00; }
         .trade-item.sell { border-left-color: #e82127; }
-        
-        .trade-info .type {
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        
-        .trade-info .date {
-            color: #888;
-            font-size: 0.85rem;
-        }
-        
-        .trade-details {
-            text-align: right;
-        }
-        
-        .trade-details .price {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-        }
-        
-        .trade-details .profit {
-            font-size: 0.9rem;
-        }
-        
-        .trade-details .profit.positive { color: #00ff00; }
-        .trade-details .profit.negative { color: #ff4444; }
-        
-        /* 右側 - AI 助手 */
-        .ai-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .ai-card {
-            background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(10,10,10,0.95));
-            border: 1px solid rgba(232,33,39,0.3);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-        }
-        
-        .ai-avatar {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid #e82127;
-            box-shadow: 0 0 40px rgba(232,33,39,0.4);
-            animation: glow 3s ease-in-out infinite;
-        }
-        
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 40px rgba(232,33,39,0.4); }
-            50% { box-shadow: 0 0 60px rgba(232,33,39,0.6), 0 0 80px rgba(232,33,39,0.3); }
-        }
-        
-        .ai-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .ai-name {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            color: #e82127;
-            margin-bottom: 5px;
-        }
-        
-        .ai-title {
-            color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-        
-        .ai-status {
-            background: rgba(0,255,0,0.1);
-            border: 1px solid rgba(0,255,0,0.3);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .ai-status .label {
-            color: #888;
-            font-size: 0.8rem;
-        }
-        
-        .ai-status .value {
-            color: #00ff00;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-        }
-        
-        /* 帳戶資訊 */
-        .account-card {
-            background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(10,10,10,0.95));
-            border: 1px solid rgba(232,33,39,0.3);
-            border-radius: 20px;
-            padding: 25px;
-        }
-        
-        .account-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .account-item:last-child {
-            border-bottom: none;
-        }
-        
-        .account-item .label {
-            color: #888;
-        }
-        
-        .account-item .value {
-            font-family: 'Orbitron', sans-serif;
-            color: #00ffcc;
-        }
-        
-        /* 策略規則 */
-        .rules-card {
-            background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(10,10,10,0.95));
-            border: 1px solid rgba(232,33,39,0.3);
-            border-radius: 20px;
-            padding: 25px;
-        }
-        
-        .rule-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 0;
-            font-size: 0.9rem;
-            color: #ccc;
-        }
-        
-        .rule-item .icon {
-            color: #e82127;
-        }
-        
-        /* 底部裝飾圖 */
-        .footer-image {
-            margin-top: 20px;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid rgba(232,33,39,0.3);
-        }
-        
-        .footer-image img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            opacity: 0.7;
-        }
-        
-        /* 響應式 */
-        @media (max-width: 1200px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .ai-panel {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px;
-            }
-            
-            .main-content {
-                padding: 15px;
-            }
-            
-            .strategy-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .ai-panel {
-                grid-template-columns: 1fr;
-            }
-            
-            .stock-info h2 {
-                font-size: 2rem;
-            }
-            
-            .price-value {
-                font-size: 2.5rem;
-            }
-        }
-        
-        /* 滾動條樣式 */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.3);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #e82127;
-            border-radius: 4px;
-        }
+        .trade-item.test { border-left-color: #ffa726; }
+        .trade-info .type { font-weight: bold; font-size: 1.1rem; }
+        .trade-info .date { color: #888; font-size: 0.85rem; }
+        .trade-details { text-align: right; }
+        .trade-details .price { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; }
+        .ai-panel { display: flex; flex-direction: column; gap: 20px; }
+        .ai-card { background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(10,10,10,0.95)); border: 1px solid rgba(232,33,39,0.3); border-radius: 20px; padding: 25px; text-align: center; }
+        .ai-avatar { width: 200px; height: 200px; margin: 0 auto 20px; border-radius: 50%; overflow: hidden; border: 3px solid #e82127; box-shadow: 0 0 40px rgba(232,33,39,0.4); animation: glow 3s ease-in-out infinite; }
+        @keyframes glow { 0%, 100% { box-shadow: 0 0 40px rgba(232,33,39,0.4); } 50% { box-shadow: 0 0 60px rgba(232,33,39,0.6), 0 0 80px rgba(232,33,39,0.3); } }
+        .ai-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .ai-name { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #e82127; margin-bottom: 5px; }
+        .ai-title { color: #888; font-size: 0.9rem; margin-bottom: 20px; }
+        .ai-status { background: rgba(0,255,0,0.1); border: 1px solid rgba(0,255,0,0.3); border-radius: 10px; padding: 15px; margin-bottom: 20px; }
+        .ai-status .label { color: #888; font-size: 0.8rem; }
+        .ai-status .value { color: #00ff00; font-family: 'Orbitron', sans-serif; font-size: 1.2rem; }
+        .update-info { background: rgba(30,30,30,0.8); border-radius: 10px; padding: 15px; margin-top: 10px; }
+        .update-info .row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.85rem; }
+        .update-info .label { color: #888; }
+        .update-info .value { color: #00ffcc; font-family: 'Orbitron', sans-serif; }
+        .account-card { background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(10,10,10,0.95)); border: 1px solid rgba(232,33,39,0.3); border-radius: 20px; padding: 25px; }
+        .account-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .account-item:last-child { border-bottom: none; }
+        .account-item .label { color: #888; }
+        .account-item .value { font-family: 'Orbitron', sans-serif; color: #00ffcc; }
+        .rules-card { background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(10,10,10,0.95)); border: 1px solid rgba(232,33,39,0.3); border-radius: 20px; padding: 25px; }
+        .rule-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; font-size: 0.9rem; color: #ccc; }
+        .rule-item .icon { color: #e82127; }
+        .footer-image { margin-top: 20px; border-radius: 15px; overflow: hidden; border: 1px solid rgba(232,33,39,0.3); }
+        .footer-image img { width: 100%; height: 150px; object-fit: cover; opacity: 0.7; }
+        @media (max-width: 1200px) { .main-content { grid-template-columns: 1fr; } .ai-panel { display: grid; grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .header { flex-direction: column; gap: 15px; padding: 15px; } .main-content { padding: 15px; } .strategy-grid { grid-template-columns: 1fr; } .ai-panel { grid-template-columns: 1fr; } .stock-info h2 { font-size: 2rem; } .price-value { font-size: 2.5rem; } }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+        ::-webkit-scrollbar-thumb { background: #e82127; border-radius: 4px; }
     </style>
 </head>
 <body>
-    <div class="bg-layer">
-        <img src="bg.jpg" alt="background">
-    </div>
+    <div class="bg-layer"><img src="bg.jpg" alt="background"></div>
     <div class="bg-overlay"></div>
-    
     <header class="header">
         <div class="logo">
             <img src="ai_robot.jpg" alt="J.A.R.V.I.S.">
@@ -500,230 +94,134 @@
                 <span>TESLA AUTO DIP-BUYING SYSTEM</span>
             </div>
         </div>
-        <div class="status-badge">
-            <div class="status-dot"></div>
-            <span id="systemStatus">系統運行中</span>
+        <div class="header-right">
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                <span id="systemStatus">自動更新中</span>
+            </div>
+            <button class="refresh-btn" onclick="manualRefresh()">🔄 手動刷新</button>
         </div>
     </header>
-    
     <main class="main-content">
         <div class="main-panel">
-            <!-- 股票卡片 -->
             <div class="stock-card">
                 <div class="stock-header">
-                    <div class="stock-info">
-                        <h2>TSLA</h2>
-                        <p>Tesla, Inc.</p>
-                    </div>
+                    <div class="stock-info"><h2>TSLA</h2><p>Tesla, Inc.</p></div>
                     <div class="stock-price">
                         <div class="price-value" id="currentPrice">$---</div>
                         <div class="price-change up" id="priceChange">+0.00%</div>
                     </div>
                 </div>
-                
                 <div class="strategy-grid">
-                    <div class="strategy-item">
-                        <div class="icon">💰</div>
-                        <div class="label">帳戶淨值</div>
-                        <div class="value" id="accountValue">$---</div>
-                    </div>
-                    <div class="strategy-item">
-                        <div class="icon">📊</div>
-                        <div class="label">持倉狀態</div>
-                        <div class="value" id="positionStatus">---</div>
-                    </div>
-                    <div class="strategy-item">
-                        <div class="icon">🎯</div>
-                        <div class="label">總收益率</div>
-                        <div class="value" id="totalReturn">---</div>
-                    </div>
-                    <div class="strategy-item">
-                        <div class="icon">✅</div>
-                        <div class="label">勝率</div>
-                        <div class="value" id="winRate">---</div>
-                    </div>
-                    <div class="strategy-item">
-                        <div class="icon">📈</div>
-                        <div class="label">完成交易</div>
-                        <div class="value" id="totalTrades">---</div>
-                    </div>
-                    <div class="strategy-item">
-                        <div class="icon">⏱️</div>
-                        <div class="label">下次檢查</div>
-                        <div class="value" id="nextCheck">10 分鐘</div>
-                    </div>
+                    <div class="strategy-item"><div class="icon">💰</div><div class="label">帳戶淨值</div><div class="value" id="accountValue">$---</div></div>
+                    <div class="strategy-item"><div class="icon">📊</div><div class="label">持倉狀態</div><div class="value" id="positionStatus">---</div></div>
+                    <div class="strategy-item"><div class="icon">🎯</div><div class="label">總收益率</div><div class="value" id="totalReturn">---</div></div>
+                    <div class="strategy-item"><div class="icon">✅</div><div class="label">勝率</div><div class="value" id="winRate">---</div></div>
+                    <div class="strategy-item"><div class="icon">📈</div><div class="label">完成交易</div><div class="value" id="totalTrades">---</div></div>
+                    <div class="strategy-item"><div class="icon">⏱️</div><div class="label">自動更新</div><div class="value" id="nextCheck">30秒</div></div>
                 </div>
             </div>
-            
-            <!-- 交易歷史 -->
             <div class="trades-section">
                 <h3 class="section-title">📜 交易歷史</h3>
-                <div class="trades-list" id="tradesList">
-                    <div class="trade-item buy">
-                        <div class="trade-info">
-                            <div class="type">等待中...</div>
-                            <div class="date">尚無交易記錄</div>
-                        </div>
-                    </div>
-                </div>
+                <div class="trades-list" id="tradesList"><div class="trade-item test"><div class="trade-info"><div class="type">等待中...</div><div class="date">尚無交易記錄</div></div></div></div>
             </div>
         </div>
-        
         <div class="ai-panel">
-            <!-- AI 助手卡片 -->
             <div class="ai-card">
-                <div class="ai-avatar">
-                    <img src="ai_robot.jpg" alt="J.A.R.V.I.S.">
-                </div>
+                <div class="ai-avatar"><img src="ai_robot.jpg" alt="J.A.R.V.I.S."></div>
                 <div class="ai-name">賈維斯</div>
                 <div class="ai-title">AI 自動交易助手</div>
-                <div class="ai-status">
-                    <div class="label">當前狀態</div>
-                    <div class="value" id="aiStatus">🔍 監控中</div>
+                <div class="ai-status"><div class="label">當前狀態</div><div class="value" id="aiStatus">🔍 監控中</div></div>
+                <div class="update-info">
+                    <div class="row"><span class="label">數據更新</span><span class="value" id="lastUpdate">--:--:--</span></div>
+                    <div class="row"><span class="label">下次刷新</span><span class="value" id="countdown">30秒</span></div>
                 </div>
             </div>
-            
-            <!-- 帳戶資訊 -->
             <div class="account-card">
                 <h3 class="section-title">💳 帳戶資訊</h3>
-                <div class="account-item">
-                    <span class="label">可用現金</span>
-                    <span class="value" id="cashBalance">$---</span>
-                </div>
-                <div class="account-item">
-                    <span class="label">購買力</span>
-                    <span class="value" id="buyingPower">$---</span>
-                </div>
-                <div class="account-item">
-                    <span class="label">持倉市值</span>
-                    <span class="value" id="positionValue">$---</span>
-                </div>
+                <div class="account-item"><span class="label">可用現金</span><span class="value" id="cashBalance">$---</span></div>
+                <div class="account-item"><span class="label">購買力</span><span class="value" id="buyingPower">$---</span></div>
+                <div class="account-item"><span class="label">持倉市值</span><span class="value" id="positionValue">$---</span></div>
             </div>
-            
-            <!-- 策略規則 -->
             <div class="rules-card">
                 <h3 class="section-title">📋 老爺版本策略</h3>
-                <div class="rule-item">
-                    <span class="icon">🔻</span>
-                    <span>單日跌 ≥3% 觸發買入</span>
-                </div>
-                <div class="rule-item">
-                    <span class="icon">1️⃣</span>
-                    <span>第一階段：30% 資金</span>
-                </div>
-                <div class="rule-item">
-                    <span class="icon">2️⃣</span>
-                    <span>跌至 -5%：加碼 20%</span>
-                </div>
-                <div class="rule-item">
-                    <span class="icon">3️⃣</span>
-                    <span>跌至 -8%：全部梭哈</span>
-                </div>
-                <div class="rule-item">
-                    <span class="icon">🚫</span>
-                    <span>不設停損，死扛到底</span>
-                </div>
-                <div class="rule-item">
-                    <span class="icon">💰</span>
-                    <span>獲利 ≥3% 全部賣出</span>
-                </div>
+                <div class="rule-item"><span class="icon">🔻</span><span>單日跌 ≥3% 觸發買入</span></div>
+                <div class="rule-item"><span class="icon">1️⃣</span><span>第一階段：30% 資金</span></div>
+                <div class="rule-item"><span class="icon">2️⃣</span><span>跌至 -5%：加碼 20%</span></div>
+                <div class="rule-item"><span class="icon">3️⃣</span><span>跌至 -8%：全部梭哈</span></div>
+                <div class="rule-item"><span class="icon">🚫</span><span>不設停損，死扛到底</span></div>
+                <div class="rule-item"><span class="icon">💰</span><span>獲利 ≥3% 全部賣出</span></div>
             </div>
-            
-            <!-- 裝飾圖 -->
-            <div class="footer-image">
-                <img src="trading.jpg" alt="Trading">
-            </div>
+            <div class="footer-image"><img src="trading.jpg" alt="Trading"></div>
         </div>
     </main>
-    
     <script>
-        // 載入數據
+        let countdown = 30;
+        
+        setInterval(() => {
+            countdown--;
+            document.getElementById('countdown').textContent = countdown + '秒';
+            document.getElementById('nextCheck').textContent = countdown + '秒';
+            if (countdown <= 0) { countdown = 30; loadData(); }
+        }, 1000);
+        
+        function manualRefresh() {
+            const btn = document.querySelector('.refresh-btn');
+            btn.style.opacity = '0.5';
+            btn.textContent = '刷新中...';
+            loadData().then(() => {
+                countdown = 30;
+                btn.style.opacity = '1';
+                btn.textContent = '🔄 手動刷新';
+            });
+        }
+        
         async function loadData() {
             try {
-                const urls = [
-                    'https://raw.githubusercontent.com/theanlowspo-cpu/tesla-dashboard/main/tesla_dashboard_data.json',
-                    'tesla_dashboard_data.json'
-                ];
-                
+                const urls = ['https://raw.githubusercontent.com/theanlowspo-cpu/tesla-dashboard/main/tesla_dashboard_data.json', 'tesla_dashboard_data.json'];
                 let data = null;
                 for (const url of urls) {
                     try {
                         const response = await fetch(url + '?t=' + Date.now());
-                        if (response.ok) {
-                            data = await response.json();
-                            break;
-                        }
+                        if (response.ok) { data = await response.json(); break; }
                     } catch (e) {}
                 }
-                
-                if (data) updateDashboard(data);
-            } catch (e) {
-                console.log('等待數據...');
-            }
+                if (data) {
+                    updateDashboard(data);
+                    document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('zh-TW');
+                }
+            } catch (e) { console.log('等待數據...'); }
         }
         
         function updateDashboard(data) {
-            // 股價
             document.getElementById('currentPrice').textContent = '$' + (data.currentPrice || 0).toFixed(2);
-            
             const changeEl = document.getElementById('priceChange');
             const change = data.dailyChange || 0;
             changeEl.textContent = (change >= 0 ? '+' : '') + change.toFixed(2) + '%';
             changeEl.className = 'price-change ' + (change >= 0 ? 'up' : 'down');
-            
-            // 帳戶
             document.getElementById('accountValue').textContent = '$' + (data.accountValue || 0).toLocaleString();
             document.getElementById('cashBalance').textContent = '$' + (data.cash || 0).toLocaleString();
             document.getElementById('buyingPower').textContent = '$' + (data.buyingPower || 0).toLocaleString();
-            
-            // 持倉
             const hasPosition = data.position && data.position.shares > 0;
-            document.getElementById('positionStatus').textContent = hasPosition ? 
-                data.position.shares + ' 股' : '空倉';
-            document.getElementById('positionValue').textContent = hasPosition ?
-                '$' + (data.position.shares * data.currentPrice).toLocaleString() : '$0';
-            
-            // 績效
+            document.getElementById('positionStatus').textContent = hasPosition ? data.position.shares + ' 股' : '空倉';
+            document.getElementById('positionValue').textContent = hasPosition ? '$' + (data.position.shares * data.currentPrice).toLocaleString() : '$0';
             document.getElementById('totalReturn').textContent = (data.totalReturn || 0).toFixed(2) + '%';
             document.getElementById('winRate').textContent = (data.winRate || 0) + '%';
             document.getElementById('totalTrades').textContent = (data.completedTrades || 0) + ' 筆';
-            
-            // AI 狀態
-            let aiStatus = '🔍 監控中';
-            if (hasPosition) {
-                aiStatus = '📈 持倉中';
-            } else if (change <= -3) {
-                aiStatus = '🔥 買入機會！';
-            }
+            let aiStatus = data.status || (hasPosition ? '📈 持倉中' : (change <= -3 ? '🔥 買入機會！' : '🔍 監控中'));
             document.getElementById('aiStatus').textContent = aiStatus;
-            
-            // 交易歷史
+            if (data.note) document.getElementById('systemStatus').textContent = data.note;
             if (data.trades && data.trades.length > 0) {
                 const tradesHtml = data.trades.slice(-10).reverse().map(t => {
-                    const isBuy = t.action === 'BUY';
-                    const profitClass = t.profit > 0 ? 'positive' : 'negative';
-                    return `
-                        <div class="trade-item ${isBuy ? 'buy' : 'sell'}">
-                            <div class="trade-info">
-                                <div class="type">${isBuy ? '🟢 買入' : '🔴 賣出'}</div>
-                                <div class="date">${new Date(t.date).toLocaleString('zh-TW')}</div>
-                            </div>
-                            <div class="trade-details">
-                                <div class="price">$${t.price.toFixed(2)} × ${t.shares}</div>
-                                ${t.profit ? `<div class="profit ${profitClass}">${t.profit > 0 ? '+' : ''}$${t.profit.toFixed(2)}</div>` : ''}
-                            </div>
-                        </div>
-                    `;
+                    const action = t.action || 'UNKNOWN';
+                    let typeClass = action === 'BUY' ? 'buy' : (action === 'SELL' ? 'sell' : 'test');
+                    let typeText = action === 'BUY' ? '🟢 買入' : (action === 'SELL' ? '🔴 賣出' : '🧪 ' + action);
+                    return '<div class="trade-item ' + typeClass + '"><div class="trade-info"><div class="type">' + typeText + '</div><div class="date">' + new Date(t.date).toLocaleString('zh-TW') + '</div></div><div class="trade-details"><div class="price">$' + t.price.toFixed(2) + ' × ' + t.shares + '</div>' + (t.reason ? '<div style="color:#888;font-size:0.8rem;">' + t.reason + '</div>' : '') + '</div></div>';
                 }).join('');
                 document.getElementById('tradesList').innerHTML = tradesHtml;
             }
         }
-        
-        // 初始載入
         loadData();
-        
-        // 每 30 秒更新
-        setInterval(loadData, 30000);
     </script>
 </body>
 </html>
