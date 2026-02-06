@@ -1,0 +1,33 @@
+{
+  "lastUpdate": "2026/2/7 上午4:24:56",
+  "quote": {
+    "price": 413.57501220703125,
+    "previousClose": 397.2099914550781,
+    "change": 4.119992221747499
+  },
+  "account": {
+    "equity": "100000",
+    "cash": "100000",
+    "buyingPower": "200000"
+  },
+  "position": null,
+  "trades": [],
+  "logs": [
+    {
+      "time": "2026/2/7 上午4:24:55",
+      "message": "TSLA $413.59 (4.12%) - 等待買入機會",
+      "status": "waiting",
+      "statusText": "等待"
+    }
+  ],
+  "valueHistory": [
+    {
+      "date": "初始",
+      "value": 100000
+    },
+    {
+      "date": "現在",
+      "value": 100000
+    }
+  ]
+}
