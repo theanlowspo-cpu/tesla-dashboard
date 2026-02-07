@@ -123,6 +123,9 @@
             </div>
             <div class="trades-section">
                 <h3 class="section-title">📜 交易歷史</h3>
+                <div class="market-notice" id="marketNotice" style="display:none; background: rgba(255,165,0,0.1); border: 1px solid rgba(255,165,0,0.3); border-radius: 10px; padding: 12px; margin-bottom: 15px; font-size: 0.9rem; color: #ffa726;">
+                    <span>📅 </span><span id="marketNoticeText">週末/假日不執行交易程序</span>
+                </div>
                 <div class="trades-list" id="tradesList"><div class="trade-item test"><div class="trade-info"><div class="type">等待中...</div><div class="date">尚無交易記錄</div></div></div></div>
             </div>
         </div>
@@ -211,6 +214,17 @@
             let aiStatus = data.status || (hasPosition ? '📈 持倉中' : (change <= -3 ? '🔥 買入機會！' : '🔍 監控中'));
             document.getElementById('aiStatus').textContent = aiStatus;
             if (data.note) document.getElementById('systemStatus').textContent = data.note;
+            
+            // 顯示假日/週末提示
+            const marketNotice = document.getElementById('marketNotice');
+            const marketNoticeText = document.getElementById('marketNoticeText');
+            if (data.isMarketClosed) {
+                marketNotice.style.display = 'block';
+                marketNoticeText.textContent = data.marketClosedReason || '週末/假日不執行交易程序';
+            } else {
+                marketNotice.style.display = 'none';
+            }
+            
             if (data.trades && data.trades.length > 0) {
                 const tradesHtml = data.trades.slice(-10).reverse().map(t => {
                     const action = t.action || 'UNKNOWN';
