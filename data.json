@@ -1,0 +1,31 @@
+{
+  "lastUpdate": "2026/2/14 上午5:59:04",
+  "currentPrice": 417.44000244140625,
+  "dailyChange": 0.08871295242764267,
+  "accountValue": 100203.73,
+  "cash": 70158.92,
+  "buyingPower": 170362.65,
+  "position": {
+    "shares": 72,
+    "avgPrice": 414.459306,
+    "currentValue": 30044.808,
+    "stage": 1
+  },
+  "trades": [
+    {
+      "date": "2026-02-12T18:00:05.635462Z",
+      "action": "BUY",
+      "symbol": "TSLA",
+      "qty": 72,
+      "price": 414.459305,
+      "status": "filled"
+    }
+  ],
+  "totalReturn": 0.20372999999999594,
+  "winRate": 0,
+  "completedTrades": 0,
+  "isMarketClosed": false,
+  "marketClosedReason": "",
+  "status": "📈 持倉中",
+  "note": "自動更新中"
+}
