@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2026/2/14 上午3:36:01",
+  "lastUpdate": "2026/2/14 上午3:36:02",
   "currentPrice": 421.55499267578125,
   "dailyChange": 1.0753555213276211,
   "accountValue": 100514.12,
@@ -8,7 +8,7 @@
   "position": {
     "shares": 72,
     "avgPrice": 414.459306,
-    "currentValue": 30355.2,
+    "currentValue": 30353.04,
     "stage": 1
   },
   "trades": [
