@@ -1,14 +1,14 @@
 {
-  "lastUpdate": "2026/2/16 下午9:59:02",
-  "currentPrice": 417.44,
-  "dailyChange": 0,
-  "accountValue": 100214.6,
+  "lastUpdate": "2026/2/17 下午2:00:03",
+  "currentPrice": 412.3,
+  "dailyChange": -1.2309999999999999,
+  "accountValue": 99844.52,
   "cash": 70158.92,
-  "buyingPower": 170373.52,
+  "buyingPower": 170003.44,
   "position": {
     "shares": 72,
     "avgPrice": 414.459306,
-    "currentValue": 30055.68,
+    "currentValue": 29685.6,
     "stage": 1
   },
   "trades": [
@@ -21,11 +21,11 @@
       "status": "filled"
     }
   ],
-  "totalReturn": 214.609968,
+  "totalReturn": -155.470032,
   "winRate": 0,
   "completedTrades": 0,
-  "isMarketClosed": true,
-  "marketClosedReason": "華盛頓誕辰紀念日 (Presidents' Day)假日休市",
-  "status": "🛑 華盛頓誕辰紀念日 (Presidents' Day)假日休市",
-  "note": "市場休市：華盛頓誕辰紀念日 (Presidents' Day)假日休市"
+  "isMarketClosed": false,
+  "marketClosedReason": "市場開市",
+  "status": "📈 持倉中",
+  "note": "自動更新中"
 }
