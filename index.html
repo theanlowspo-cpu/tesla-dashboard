@@ -109,7 +109,8 @@
                     <div class="stock-info"><h2>TSLA</h2><p>Tesla, Inc.</p></div>
                     <div class="stock-price">
                         <div class="price-value" id="currentPrice">$---</div>
-                        <div class="price-change up" id="priceChange">+0.00%</div>
+                        <div class="price-change up" id="priceChange">當日 +0.00%</div>
+                        <div class="price-change up" id="holdingChange" style="margin-top:5px;">持有 +0.00%</div>
                     </div>
                 </div>
                 <div class="strategy-grid">
@@ -207,8 +208,13 @@
             document.getElementById('currentPrice').textContent = '$' + (data.currentPrice || 0).toFixed(2);
             const changeEl = document.getElementById('priceChange');
             const change = data.dailyChange || 0;
-            changeEl.textContent = (change >= 0 ? '+' : '') + change.toFixed(2) + '%';
+            changeEl.textContent = '當日 ' + (change >= 0 ? '+' : '') + change.toFixed(2) + '%';
             changeEl.className = 'price-change ' + (change >= 0 ? 'up' : 'down');
+            
+            const holdingEl = document.getElementById('holdingChange');
+            const holdingChange = data.unrealized_plpc ? (parseFloat(data.unrealized_plpc) * 100) : (data.avgPrice ? ((data.currentPrice - data.avgPrice) / data.avgPrice * 100) : 0);
+            holdingEl.textContent = '持有 ' + (holdingChange >= 0 ? '+' : '') + holdingChange.toFixed(2) + '%';
+            holdingEl.className = 'price-change ' + (holdingChange >= 0 ? 'up' : 'down');
             document.getElementById('accountValue').textContent = '$' + (data.accountValue || 0).toLocaleString();
             document.getElementById('cashBalance').textContent = '$' + (data.cash || 0).toLocaleString();
             document.getElementById('buyingPower').textContent = '$' + (data.buyingPower || 0).toLocaleString();
