@@ -1,19 +1,27 @@
 {
-  "lastUpdate": "2026/2/17 下午6:21:02",
-  "currentPrice": 407.65,
-  "dailyChange": -2.3449999999999998,
-  "unrealized_plpc": -0.01643,
-  "avgPrice": 414.459306,
-  "accountValue": 99514.75,
-  "cash": 70158.92,
-  "buyingPower": 169673.67,
+  "lastUpdate": "2026/2/17 下午6:22:03",
+  "currentPrice": 408.09,
+  "dailyChange": -2.2399999999999998,
+  "unrealized_plpc": -0.01035,
+  "avgPrice": 412.358585,
+  "accountValue": 99548,
+  "cash": 56289.98,
+  "buyingPower": 155837.98,
   "position": {
-    "shares": 72,
-    "avgPrice": 414.459306,
-    "currentValue": 29350.8,
+    "shares": 106,
+    "avgPrice": 412.358585,
+    "currentValue": 43257.54,
     "stage": 1
   },
   "trades": [
+    {
+      "date": "2026-02-17T18:21:50.909584642Z",
+      "action": "BUY",
+      "symbol": "TSLA",
+      "qty": 34,
+      "price": 407.91,
+      "status": "filled"
+    },
     {
       "date": "2026-02-12T18:00:05.635462Z",
       "action": "BUY",
@@ -23,7 +31,7 @@
       "status": "filled"
     }
   ],
-  "totalReturn": -490.270032,
+  "totalReturn": -452.47001,
   "winRate": 0,
   "completedTrades": 0,
   "isMarketClosed": false,
