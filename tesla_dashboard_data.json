@@ -1,12 +1,12 @@
 {
-  "lastUpdate": "2026/2/19 下午8:10:02",
+  "lastUpdate": "2026/2/19 下午8:11:05",
   "currentPrice": 410.46,
   "dailyChange": -0.209,
   "unrealized_plpc": -0.0046,
   "avgPrice": 412.358585,
-  "accountValue": 99799.26,
+  "accountValue": 99795.58,
   "cash": 56289.97,
-  "buyingPower": 156089.23,
+  "buyingPower": 156085.55,
   "position": {
     "shares": 106,
     "avgPrice": 412.358585,
