@@ -1,16 +1,16 @@
 {
-  "lastUpdate": "2026/2/19 下午6:39:02",
-  "currentPrice": 409.05,
-  "dailyChange": -0.5519999999999999,
-  "unrealized_plpc": -0.00802,
+  "lastUpdate": "2026/2/19 下午6:40:02",
+  "currentPrice": 409.465,
+  "dailyChange": -0.451,
+  "unrealized_plpc": -0.00702,
   "avgPrice": 412.358585,
-  "accountValue": 99649.27,
+  "accountValue": 99693.26,
   "cash": 56289.97,
-  "buyingPower": 155939.24,
+  "buyingPower": 155983.23,
   "position": {
     "shares": 106,
     "avgPrice": 412.358585,
-    "currentValue": 43359.3,
+    "currentValue": 43403.29,
     "stage": 2
   },
   "trades": [
@@ -31,7 +31,7 @@
       "status": "filled"
     }
   ],
-  "totalReturn": -350.71001,
+  "totalReturn": -306.72001,
   "winRate": 0,
   "completedTrades": 0,
   "isMarketClosed": false,
